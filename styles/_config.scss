@@ -1,0 +1,77 @@
+$primary-color: #ccc;
+$checkbox-img: url(../scripts/components/Form/img/svg/checkbox.svg);
+$checkbox-img-checked: url(../scripts/components/Form/img/svg/checkbox-checked.svg);
+$select-arrow-up: url(../scripts/components/Form/img/svg/arrow-up.svg);
+$select-arrow-down: url(../scripts/components/Form/img/svg/arrow-down.svg);
+
+@mixin background {
+  background-color: $primary-color;
+}
+
+@mixin background-checkbox {
+  background-image: $checkbox-img;
+}
+
+@mixin background-checkbox-checked {
+  background-image: $checkbox-img-checked;
+}
+
+@mixin background-select {
+  background-image: $select-arrow-down;
+}
+
+@mixin background-select-selected {
+  background-image: $select-arrow-up;
+}
+
+@mixin font {
+  font-family: "Open Sans", "Helvetica Neue", sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+}
+
+@mixin placeholder {
+  &::-webkit-input-placeholder {
+    @content;
+  }
+  &:-moz-placeholder {
+    @content;
+  }
+  &::-moz-placeholder {
+    @content;
+  }
+  &:-ms-input-placeholder {
+    @content;
+  }
+}
+
+@mixin easeOut {
+  transition: all 0.5s ease-out;
+}
+
+// Media Query Mixins
+@mixin mediaSm {
+  @media screen and (max-width: 500px) {
+    @content;
+  }
+}
+
+@mixin mediaMd {
+  @media screen and (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin mediaLg {
+  @media screen and (min-width: 769px) and (max-width: 1170px) {
+    @content;
+  }
+}
+
+@mixin mediaXl {
+  @media screen and (min-width: 1171px) {
+    @content;
+  }
+}

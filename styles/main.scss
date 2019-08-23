@@ -1,0 +1,34 @@
+@import "./config";
+@import "./fonts";
+@import "../scripts/components/Form/form";
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  @include background;
+  margin: 0;
+  padding: 110px 0 110px 0;
+}
+
+body::-webkit-scrollbar {
+  width: 25px;
+}
+
+body::-webkit-scrollbar-track {
+  background: $primary-color;
+}
+body::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    (to top, rgb(81, 80, 80), darken(rgb(81, 80, 80), 55%))
+  );
+  border-radius: 15px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    (to bottom, rgb(81, 80, 80), darken(rgb(81, 80, 80), 55%))
+  );
+  border-radius: 15px;
+}
