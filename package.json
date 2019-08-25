@@ -5,13 +5,14 @@
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --config config/development.js",
+    "start": "node ./server/app.js",
     "local": "nodemon ./server/app.js",
     "build": "webpack -p --config config/production.js --progress --profile --colors",
     "lint": "./node_modules/eslint/bin/eslint.js ./scripts/",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d build"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
