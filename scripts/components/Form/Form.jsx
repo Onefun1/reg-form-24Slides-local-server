@@ -11,6 +11,7 @@ class Form extends Component {
       error_message: false,
       form_sending: false,
       succsess: false,
+      users: [],
       errors: [],
       length: 0
     };
@@ -37,7 +38,7 @@ class Form extends Component {
   handleSubmit = e => {
     e.preventDefault();
     // if (
-    //   this.inputCheckboxConfirmRef.current.checked === true &&
+    //   this.inputCheckboxConfirmRef.current.checked === true &&                  // simple validation
     //   this.inputNameRef.current.value &&
     //   this.selectCodeRef.current.value &&
     //   this.inputNumberRef.current.value &&
@@ -55,6 +56,7 @@ class Form extends Component {
     let newUser = {
       name: this.inputNameRef.current.value,
       dialCode: this.selectCodeRef.current.value,
+      number: this.inputNumberRef.current.value,
       email: this.inputEmailRef.current.value,
       country: this.selectCountriesRef.current.value,
       password: this.inputPasswordRef.current.value,
@@ -74,8 +76,17 @@ class Form extends Component {
         if (response.status === "success") {
           this.setState({
             succsess: true,
-            form_sending: false
+            form_sending: false,
+            users: [...this.state.users, newUser]
           });
+
+          this.inputNameRef.current.value = null;
+          this.selectCodeRef.current.value = null;
+          this.inputNumberRef.current.value = null;
+          this.inputEmailRef.current.value = null;
+          this.selectCountriesRef.current.value = null;
+          this.inputPasswordRef.current.value = null;
+          this.inputPasswordConfirmRef.current.value = null;
         }
         if (response.errors) {
           let errors = response.errors.map((error, index) => {
@@ -120,6 +131,12 @@ class Form extends Component {
     });
   };
 
+  hendleChange = () => {
+    this.setState(({ length }) => ({
+      length: this.inputPasswordRef.current.value.length
+    }));
+  };
+
   render() {
     const {
       error_message,
@@ -130,6 +147,12 @@ class Form extends Component {
       errors,
       length
     } = this.state;
+
+    const passValidator = error_message
+      ? "form__input-not-valid"
+      : length > 5
+      ? "form__input-valid"
+      : "";
 
     return (
       <main className="main">
@@ -151,6 +174,7 @@ class Form extends Component {
               autoComplete="off"
               placeholder="Your name"
               ref={this.inputNameRef}
+              required
             />
             <Error_message error_message={errors.includes("name")} />
             <label className="form__label" htmlFor="phone">
@@ -210,9 +234,9 @@ class Form extends Component {
                 id="country"
                 placeholder="Select country"
                 ref={this.selectCountriesRef}
-                defaultValue=""
+                defaultValue="null"
               >
-                <option className="form-option" value="" disabled>
+                <option className="form-option" value="null" disabled>
                   Select country
                 </option>
                 {isLoaded && countries.length > 0
@@ -237,32 +261,20 @@ class Form extends Component {
               Password
             </label>
             <input
-              className={`form__input ${
-                error_message
-                  ? "form__input-not-valid"
-                  : length > 5
-                  ? "form__input-valid"
-                  : ""
-              }`}
+              className={`form__input ${passValidator}`}
               type="password"
               id="password"
               autoComplete="off"
               placeholder="Password"
               ref={this.inputPasswordRef}
-              onChange={() => (this.state.length = this.inputPasswordRef)}
+              onChange={this.hendleChange}
             />
             <Error_message error_message={errors.includes("password")} />
             <label className="form__label" htmlFor="password_conf">
               Confirm password
             </label>
             <input
-              className={`form__input ${
-                error_message
-                  ? "form__input-not-valid"
-                  : length > 5
-                  ? "form__input-valid"
-                  : ""
-              }`}
+              className={`form__input ${passValidator}`}
               type="password"
               id="password_conf"
               autoComplete="off"
@@ -350,16 +362,13 @@ Error_message.defaultProps = {
   message: "Invalid value"
 };
 
-const Succsess_message = ({ succsess, hideSuccsessMessage, message }) => {
+const Succsess_message = ({ succsess, hide, message }) => {
   return (
     <div className={`main__success-message ${succsess ? "show" : ""}`}>
       <div className="message__tittle">
         <span className="message__tittle-icon" />
         Great!
-        <span
-          onClick={hideSuccsessMessage}
-          className="message__tittle-close-icon"
-        />
+        <span onClick={hide} className="message__tittle-close-icon" />
       </div>
       <div className="message__message">{message}</div>
     </div>
@@ -368,7 +377,7 @@ const Succsess_message = ({ succsess, hideSuccsessMessage, message }) => {
 
 Succsess_message.propTypes = {
   succsess: PropTypes.bool.isRequired,
-  hideSuccsessMessage: PropTypes.func
+  hide: PropTypes.func
 };
 
 Succsess_message.defaultProps = {
