@@ -1,6 +1,66 @@
 $background_color: #fff;
 $border_color: #ebedf8;
 
+@mixin font-succsess {
+  color: #419779;
+  font-size: 14px;
+}
+
+.main {
+  position: relative;
+  @include font;
+  width: 1024px;
+  height: 1024px;
+  background-color: #fafbfc;
+  margin: auto;
+  padding: 110px 298px;
+
+  &__success-message {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    width: 381px;
+    height: 64px;
+    border-radius: 4px;
+    border: solid 1px rgba(65, 151, 121, 0.3);
+    background-color: #e7f2ee;
+    padding: 12px;
+    visibility: hidden;
+
+    & {
+      .message__message,
+      .message__tittle {
+        @include font-succsess();
+      }
+
+      .message__tittle {
+        font-weight: bold;
+      }
+
+      .message__message {
+        display: inline-block;
+        margin-left: 23px;
+      }
+
+      .message__tittle-icon {
+        @include background-success-icon;
+        padding-left: 15px;
+        padding-right: 8px;
+      }
+
+      .message__tittle-close-icon {
+        @include background-success-close-icon;
+        cursor: pointer;
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+  .show {
+    visibility: visible;
+  }
+}
+
 .container {
   margin: auto;
   padding: 24px 40px 30px;
@@ -9,7 +69,6 @@ $border_color: #ebedf8;
   border-radius: 4px;
   border: solid 1px $border_color;
   background-color: $background_color;
-  @include font;
 
   &__title {
     width: 126px;
@@ -91,10 +150,10 @@ $border_color: #ebedf8;
         border-bottom: solid 1px #ed715c;
       }
 
-      // &:active label,
-      // &:focus label {
-      //   visibility: visible;
-      // }
+      &:active label,
+      &:focus label {
+        visibility: visible;
+      }
 
       &:active::placeholder,
       &:focus::placeholder {
@@ -110,7 +169,6 @@ $border_color: #ebedf8;
     color: #ed715c;
     align-self: flex-start;
     margin-top: -30px;
-    margin-bottom: 31px;
     visibility: hidden;
 
     &-shown {
@@ -122,6 +180,8 @@ $border_color: #ebedf8;
     width: 347px;
     height: 42px;
     border-radius: 3px;
+    border: 0;
+    outline: none;
     background-color: #46b688;
     font-size: 14px;
     text-align: center;
@@ -131,6 +191,27 @@ $border_color: #ebedf8;
     color: #fff;
     letter-spacing: 0.47px;
     margin-bottom: 20px;
+    cursor: pointer;
+    @include easeOut;
+
+    &:hover,
+    &:focus {
+      background-color: #399f81;
+    }
+
+    &:active {
+      background-color: #288077;
+    }
+
+    &-icon {
+      @include form-sending-icon;
+      width: 20px;
+      height: 20px;
+      z-index: 3;
+      display: inline-block;
+      margin-top: 11px;
+      @include rotate360;
+    }
   }
 
   &__paragraph {
@@ -138,6 +219,18 @@ $border_color: #ebedf8;
     font-size: 14px;
     text-align: center;
     color: #9398a2;
+
+    &-link {
+      text-decoration: none;
+      color: #0a7abf;
+
+      &:visited {
+        color: #0a7abf;
+      }
+      &:hover {
+        color: #399f81;
+      }
+    }
   }
 }
 
@@ -147,6 +240,7 @@ $border_color: #ebedf8;
   margin-bottom: 30px;
   font-size: 14px;
   color: #9398a2;
+  margin-top: 51px;
 }
 
 .form-label__input {
@@ -180,3 +274,22 @@ $border_color: #ebedf8;
 //   border: 1px solid black;
 //   border-radius: 4px;
 // }
+
+.dial_list {
+  width: 100%;
+  // display: flex;
+  flex-direction: column;
+  margin-top: -30px;
+  margin-bottom: 80px;
+  display: none;
+}
+
+.dial_item {
+  display: flex;
+  padding-left: 10px;
+  justify-content: space-between;
+}
+
+.form__input1:focus .dial_list {
+  display: flex;
+}
