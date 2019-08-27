@@ -8,5 +8,5 @@
 - If you want to make a build, run `npm run build`
 
 ## Getting started online ([Heroku](https://devcenter.heroku.com/))
-###[Prewiev](https://onefun1.github.io/reg-form-24Slides-local-server/)
+### [Prewiev](https://onefun1.github.io/reg-form-24Slides-local-server/)
 
