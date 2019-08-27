@@ -9,5 +9,5 @@
 
 ## Getting started online ([Heroku](https://devcenter.heroku.com/))
 
-###  - [Prewiev - follow this link ](https://onefun1.github.io/reg-form-24Slides-local-server/)
+- [Prewiev - follow this link ](https://onefun1.github.io/reg-form-24Slides-local-server/)
 
