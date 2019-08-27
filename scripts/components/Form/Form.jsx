@@ -4,8 +4,10 @@ import { connect } from "react-redux";
 import { addUser, getCountries } from "../../actions/actionCreator";
 
 import { getCountriesFromServer, BASE_URL } from "./get-data-from-server";
-import Error_message from "../Error_message";
-import Succsess_message from "../Succsess_message";
+import Error_message from "./Error_message";
+import Succsess_message from "./Succsess_message";
+import Label from "../Form/Label";
+import ButtonSubmit from "../Form/ButtonSubmit";
 
 class Form extends Component {
   constructor(props) {
@@ -219,12 +221,7 @@ class Form extends Component {
             onSubmit={e => this.handleSubmit(e)}
             className="container__form form"
           >
-            <label
-              className={`form__label ${activeField === "name" ? "show" : ""}`}
-              htmlFor="name"
-            >
-              Name
-            </label>
+            <Label activeField={activeField} name={"name"} text={"Name"} />
             <input
               className="form__input"
               type="text"
@@ -232,18 +229,16 @@ class Form extends Component {
               autoComplete="off"
               placeholder="Your name"
               ref={this.inputNameRef}
+              onFocus={this.handleFocus}
               required
               data-name={"name"}
             />
             <Error_message error_message={errors.includes("name")} />
-            <label
-              className={`form__label ${
-                activeField === "phone" || activeField === "code" ? "show" : ""
-              }`}
-              htmlFor="phone"
-            >
-              {`${activeField === "phone" ? "Phone" : "Code"}`}
-            </label>
+            <Label
+              activeField={activeField}
+              name={`${activeField === "phone" ? "phone" : "code"}`}
+              text={`${activeField === "phone" ? "Phone" : "Code"}`}
+            />
             <div className="form__wrapper">
               <input
                 className={`form__input input_arrow ${
@@ -309,12 +304,7 @@ class Form extends Component {
               />
             </div>
             <Error_message error_message={errors.includes("dialCode")} />
-            <label
-              className={`form__label ${activeField === "email" ? "show" : ""}`}
-              htmlFor="email"
-            >
-              Email
-            </label>
+            <Label activeField={activeField} name={"email"} text={"Email"} />
             <input
               className="form__input"
               type="email"
@@ -327,14 +317,11 @@ class Form extends Component {
               autoComplete="off"
             />
             <Error_message error_message={errors.includes("email")} />
-            <label
-              className={`form__label ${
-                activeField === "country" ? "show" : ""
-              }`}
-              htmlFor="country"
-            >
-              Country
-            </label>
+            <Label
+              activeField={activeField}
+              name={"country"}
+              text={"Country"}
+            />
             <div className="form__wrapper">
               <input
                 className={`form__input input_arrow ${
@@ -387,14 +374,11 @@ class Form extends Component {
               error_message={errors.includes("country")}
               message="Invalid value (available only GB, US, UA)"
             />
-            <label
-              className={`form__label ${
-                activeField === "password" ? "show" : ""
-              }`}
-              htmlFor="password"
-            >
-              Password
-            </label>
+            <Label
+              activeField={activeField}
+              name={"password"}
+              text={"Password"}
+            />
             <input
               className={`form__input ${passValidate} `}
               type="password"
@@ -408,14 +392,11 @@ class Form extends Component {
               autoComplete="off"
             />
             <Error_message error_message={errors.includes("password")} />
-            <label
-              className={`form__label ${
-                activeField === "password_conf" ? "show" : ""
-              }`}
-              htmlFor="password_conf"
-            >
-              Confirm password
-            </label>
+            <Label
+              activeField={activeField}
+              name={"password_conf"}
+              text={"Confirm password"}
+            />
             <input
               className={`form__input ${passValidate}`}
               type="password"
@@ -444,13 +425,7 @@ class Form extends Component {
               Yes, I'd like to recieve the very occasional email with
               information on new services and discounts
             </label>
-            <button type="submit" className="form__button">
-              {form_sending || !isLoaded ? (
-                <span className="form__button-icon" />
-              ) : (
-                "create an account"
-              )}
-            </button>
+            <ButtonSubmit form_sending={form_sending} isLoaded={isLoaded} />
             <p className="form__paragraph">
               Already have a 24Slides account?{" "}
               <a className="form__paragraph-link" href="https://24slides.com/">

@@ -16,7 +16,8 @@ const Succsess_message = ({ succsess, hide, message }) => {
 
 Succsess_message.propTypes = {
   succsess: PropTypes.bool.isRequired,
-  hide: PropTypes.func
+  hide: PropTypes.func,
+  message: PropTypes.string
 };
 
 Succsess_message.defaultProps = {

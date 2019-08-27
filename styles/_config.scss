@@ -16,6 +16,11 @@ $input-code-icon-up: url(../scripts/components/Form/img/svg/arrow-up.svg);
 
 // Form svg icons End //
 
+@mixin font-succsess {
+  color: $succses_color;
+  font-size: 14px;
+}
+
 @mixin background {
   background-color: $primary-color;
 }
@@ -162,30 +167,5 @@ $input-code-icon-up: url(../scripts/components/Form/img/svg/arrow-up.svg);
       (to bottom, $succses_color, darken($succses_color, 15%))
     );
     border-radius: 15px;
-  }
-}
-
-// Media Query Mixins
-@mixin mediaSm {
-  @media screen and (max-width: 500px) {
-    @content;
-  }
-}
-
-@mixin mediaMd {
-  @media screen and (max-width: 768px) {
-    @content;
-  }
-}
-
-@mixin mediaLg {
-  @media screen and (min-width: 769px) and (max-width: 1170px) {
-    @content;
-  }
-}
-
-@mixin mediaXl {
-  @media screen and (min-width: 1171px) {
-    @content;
   }
 }

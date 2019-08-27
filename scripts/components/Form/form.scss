@@ -1,8 +1,3 @@
-@mixin font-succsess {
-  color: $succses_color;
-  font-size: 14px;
-}
-
 /* Main start*/
 
 .main {
@@ -126,7 +121,7 @@
     .drop-down-country__list {
       background-color: #fff;
       width: 34%;
-      max-height: 575px;
+      max-height: 360px;
       position: absolute;
       top: 335px;
       overflow: scroll;
@@ -176,11 +171,10 @@
   &__input {
     width: inherit;
     font: inherit;
-    margin-bottom: 30px;
+    margin-bottom: 34px;
     font-size: 16px;
     line-height: 1.5;
     outline: none;
-    -webkit-appearance: none;
     border: none;
     border-bottom: solid 1px #9b9b9b;
     color: #454545;
