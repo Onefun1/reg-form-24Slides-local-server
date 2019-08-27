@@ -368,28 +368,6 @@ class Form extends Component {
             </p>
             <br /> <br /> <br />
           </form>
-          {/* <form action="#!" className="container__form form">
-            <label className="form__label" htmlFor="phone">
-              Phone
-            </label>
-
-            <input  className="form__input1" />
-
-            <div className="dial_list">
-              <div className="dial_item">
-                <div>123</div>
-                <div>Amsterdam</div>
-              </div>
-              <div className="dial_item">
-                <div>456</div>
-                <div className="country">Paris</div>
-              </div>
-              <div className="dial_item">
-                <div>987</div>
-                <div>London</div>
-              </div>
-            </div>
-          </form> */}
         </div>
       </main>
     );

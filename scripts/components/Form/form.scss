@@ -6,6 +6,8 @@ $border_color: #ebedf8;
   font-size: 14px;
 }
 
+/* Main start*/
+
 .main {
   position: relative;
   @include font;
@@ -15,6 +17,7 @@ $border_color: #ebedf8;
   margin: auto;
   padding: 110px 298px;
   @include easeOut;
+  box-shadow: 0 0 10px black;
 
   &__success-message {
     position: absolute;
@@ -62,6 +65,10 @@ $border_color: #ebedf8;
   }
 }
 
+/* Main end*/
+
+/* Container start*/
+
 .container {
   margin: auto;
   padding: 24px 40px 30px;
@@ -83,6 +90,10 @@ $border_color: #ebedf8;
     color: #454545;
   }
 }
+
+/* Container end*/
+
+/* Form start*/
 
 .form {
   width: 100%;
@@ -228,64 +239,35 @@ $border_color: #ebedf8;
       }
     }
   }
+
+  &__label-check {
+    width: inherit;
+    padding-left: 26px;
+    margin-bottom: 30px;
+    font-size: 14px;
+    color: #9398a2;
+    margin-top: 31px;
+  }
+
+  &-label__input {
+    position: absolute;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+
+  .check__box {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    @include background-checkbox;
+    margin-left: -26px;
+    cursor: pointer;
+  }
+
+  &-label__input:checked + .check__box {
+    @include background-checkbox-checked;
+  }
 }
 
-.form__label-check {
-  width: inherit;
-  padding-left: 26px;
-  margin-bottom: 30px;
-  font-size: 14px;
-  color: #9398a2;
-  margin-top: 31px;
-}
-
-.form-label__input {
-  position: absolute;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-}
-
-.check__box {
-  position: absolute;
-  width: 18px;
-  height: 18px;
-  @include background-checkbox;
-  margin-left: -26px;
-  cursor: pointer;
-}
-
-// .form-label__input:focus + .check__box {
-//   @include background-checkbox;
-//   border: 1px solid black;
-//   border-radius: 4px;
-// }
-
-.form-label__input:checked + .check__box {
-  @include background-checkbox-checked;
-}
-
-// .form-label__input:checked:focus + .check__box {
-//   @include background-checkbox-checked;
-//   border: 1px solid black;
-//   border-radius: 4px;
-// }
-
-.dial_list {
-  width: 100%;
-  // display: flex;
-  flex-direction: column;
-  margin-top: -30px;
-  margin-bottom: 80px;
-  display: none;
-}
-
-.dial_item {
-  display: flex;
-  padding-left: 10px;
-  justify-content: space-between;
-}
-
-.form__input1:focus .dial_list {
-  display: flex;
-}
+/* Form end */
