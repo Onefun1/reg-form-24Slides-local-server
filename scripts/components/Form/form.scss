@@ -14,6 +14,7 @@ $border_color: #ebedf8;
   background-color: #fafbfc;
   margin: auto;
   padding: 110px 298px;
+  @include easeOut;
 
   &__success-message {
     position: absolute;
@@ -113,7 +114,7 @@ $border_color: #ebedf8;
     letter-spacing: normal;
     color: #9b9b9b;
     cursor: pointer;
-    // visibility: hidden;
+    visibility: hidden;
   }
 
   &__input,
@@ -148,11 +149,6 @@ $border_color: #ebedf8;
 
       &-not-valid {
         border-bottom: solid 1px #ed715c;
-      }
-
-      &:active label,
-      &:focus label {
-        visibility: visible;
       }
 
       &:active::placeholder,
@@ -240,7 +236,7 @@ $border_color: #ebedf8;
   margin-bottom: 30px;
   font-size: 14px;
   color: #9398a2;
-  margin-top: 51px;
+  margin-top: 31px;
 }
 
 .form-label__input {

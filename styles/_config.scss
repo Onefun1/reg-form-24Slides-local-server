@@ -1,4 +1,7 @@
 $primary-color: #ccc;
+
+// Form svg icons start //
+
 $checkbox-img: url(../scripts/components/Form/img/svg/checkbox.svg);
 $checkbox-img-checked: url(../scripts/components/Form/img/svg/checkbox-checked.svg);
 $select-arrow-up: url(../scripts/components/Form/img/svg/arrow-up.svg);
@@ -6,6 +9,8 @@ $select-arrow-down: url(../scripts/components/Form/img/svg/arrow-down.svg);
 $succsess-icon: url(../scripts/components/Form/img/svg/succsess-icon.svg);
 $succsess-close-icon: url(../scripts/components/Form/img/svg/succsess-close-icon.svg);
 $form-sending-icon: url(../scripts/components/Form/img/svg/button-waiting-icon.svg);
+
+// Form svg icons End //
 
 @mixin background {
   background-color: $primary-color;
@@ -122,7 +127,7 @@ $form-sending-icon: url(../scripts/components/Form/img/svg/button-waiting-icon.s
 }
 
 @mixin easeOut {
-  transition: all 0.5s ease-out;
+  transition: all 0.5s;
 }
 
 // Media Query Mixins

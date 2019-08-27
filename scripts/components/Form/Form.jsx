@@ -1,8 +1,11 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 
-import { getCountries } from "./get-data-from-server";
-import { log } from "util";
+import { connect } from "react-redux";
+import { addUser, getCountries } from "../../actions/actionCreator";
+
+import { getCountriesFromServer, BASE_URL } from "./get-data-from-server";
+import Error_message from "../Error_message";
+import Succsess_message from "../Succsess_message";
 
 class Form extends Component {
   constructor(props) {
@@ -11,9 +14,9 @@ class Form extends Component {
       error_message: false,
       form_sending: false,
       succsess: false,
-      users: [],
       errors: [],
-      length: 0
+      length: 0,
+      activeField: ""
     };
 
     this.selectCountriesRef = React.createRef();
@@ -27,28 +30,19 @@ class Form extends Component {
   }
 
   async componentDidMount() {
-    const countries = await getCountries();
+    const countries = await getCountriesFromServer();
+
+    const { getCountries } = this.props;
+    getCountries(countries);
 
     this.setState({
-      isLoaded: true,
-      countries
+      isLoaded: true
     });
   }
 
   handleSubmit = e => {
     e.preventDefault();
-    // if (
-    //   this.inputCheckboxConfirmRef.current.checked === true &&                  // simple validation
-    //   this.inputNameRef.current.value &&
-    //   this.selectCodeRef.current.value &&
-    //   this.inputNumberRef.current.value &&
-    //   this.inputEmailRef.current.value &&
-    //   this.inputPasswordRef.current.value &&
-    //   this.inputPasswordConfirmRef.current.value &&
-    //   this.selectCountriesRef.current.value &&
-    //   this.inputPasswordRef.current.value ===
-    //     this.inputPasswordConfirmRef.current.value
-    // ) {
+
     this.setState({
       form_sending: true
     });
@@ -60,10 +54,11 @@ class Form extends Component {
       email: this.inputEmailRef.current.value,
       country: this.selectCountriesRef.current.value,
       password: this.inputPasswordRef.current.value,
-      passwordConfirmation: this.inputPasswordConfirmRef.current.value
+      passwordConfirmation: this.inputPasswordConfirmRef.current.value,
+      confirm: this.inputCheckboxConfirmRef.current.checked
     };
 
-    fetch("http://127.0.0.1:3002/register", {
+    fetch(`${BASE_URL}register`, {
       method: "POST",
       body: JSON.stringify(newUser),
       headers: {
@@ -76,9 +71,21 @@ class Form extends Component {
         if (response.status === "success") {
           this.setState({
             succsess: true,
-            form_sending: false,
-            users: [...this.state.users, newUser]
+            form_sending: false
           });
+
+          const { addUser } = this.props;
+
+          addUser(
+            this.inputNameRef.current.value,
+            this.selectCodeRef.current.value,
+            this.inputNumberRef.current.value,
+            this.inputEmailRef.current.value,
+            this.selectCountriesRef.current.value,
+            this.inputPasswordRef.current.value,
+            this.inputPasswordConfirmRef.current,
+            this.inputCheckboxConfirmRef.current.checked
+          );
 
           this.inputNameRef.current.value = null;
           this.selectCodeRef.current.value = null;
@@ -87,6 +94,7 @@ class Form extends Component {
           this.selectCountriesRef.current.value = null;
           this.inputPasswordRef.current.value = null;
           this.inputPasswordConfirmRef.current.value = null;
+          this.inputCheckboxConfirmRef.current.checked = false;
         }
         if (response.errors) {
           let errors = response.errors.map((error, index) => {
@@ -99,10 +107,6 @@ class Form extends Component {
         }
       })
       .catch(error => console.error("Error:", error));
-  };
-
-  checkServerResponse = errors => {
-    console.log(errors);
   };
 
   handlePasswordValidation = () => {
@@ -137,18 +141,26 @@ class Form extends Component {
     }));
   };
 
+  handleField = ({ target }) => {
+    this.setState({
+      activeField: target.getAttribute("data-name")
+    });
+  };
+
   render() {
     const {
       error_message,
       isLoaded,
-      countries,
       form_sending,
       succsess,
       errors,
-      length
+      length,
+      activeField
     } = this.state;
 
-    const passValidator = error_message
+    const { countries } = this.props;
+
+    const passValidate = error_message
       ? "form__input-not-valid"
       : length > 5
       ? "form__input-valid"
@@ -164,7 +176,10 @@ class Form extends Component {
             onSubmit={e => this.handleSubmit(e)}
             className="container__form form"
           >
-            <label className="form__label" htmlFor="name">
+            <label
+              className={`form__label ${activeField === "name" ? "show" : ""}`}
+              htmlFor="name"
+            >
               Name
             </label>
             <input
@@ -175,9 +190,16 @@ class Form extends Component {
               placeholder="Your name"
               ref={this.inputNameRef}
               required
+              onFocus={this.handleField}
+              data-name={"name"}
             />
             <Error_message error_message={errors.includes("name")} />
-            <label className="form__label" htmlFor="phone">
+            <label
+              className={`form__label ${
+                activeField === "phone" || activeField === "code" ? "show" : ""
+              }`}
+              htmlFor="phone"
+            >
               Phone
             </label>
             <div className="form__wrapper">
@@ -185,6 +207,9 @@ class Form extends Component {
                 className="form__select"
                 defaultValue="null"
                 ref={this.selectCodeRef}
+                id="code"
+                onFocus={this.handleField}
+                data-name={"code"}
               >
                 <option value="null" disabled>
                   Code
@@ -210,10 +235,15 @@ class Form extends Component {
                 autoComplete="off"
                 placeholder="Phone number"
                 ref={this.inputNumberRef}
+                onFocus={this.handleField}
+                data-name={"phone"}
               />
             </div>
             <Error_message error_message={errors.includes("dialCode")} />
-            <label className="form__label" htmlFor="email">
+            <label
+              className={`form__label ${activeField === "email" ? "show" : ""}`}
+              htmlFor="email"
+            >
               Email
             </label>
             <input
@@ -223,9 +253,16 @@ class Form extends Component {
               autoComplete="off"
               placeholder="Email address"
               ref={this.inputEmailRef}
+              onFocus={this.handleField}
+              data-name={"email"}
             />
             <Error_message error_message={errors.includes("email")} />
-            <label className="form__label" htmlFor="country">
+            <label
+              className={`form__label ${
+                activeField === "country" ? "show" : ""
+              }`}
+              htmlFor="country"
+            >
               Country
             </label>
             <div className="form__wrapper">
@@ -235,6 +272,8 @@ class Form extends Component {
                 placeholder="Select country"
                 ref={this.selectCountriesRef}
                 defaultValue="null"
+                onFocus={this.handleField}
+                data-name={"country"}
               >
                 <option className="form-option" value="null" disabled>
                   Select country
@@ -257,30 +296,44 @@ class Form extends Component {
               error_message={errors.includes("country")}
               message="Invalid value (available only GB, US, UA)"
             />
-            <label className="form__label" htmlFor="password">
+            <label
+              className={`form__label ${
+                activeField === "password" ? "show" : ""
+              }`}
+              htmlFor="password"
+            >
               Password
             </label>
             <input
-              className={`form__input ${passValidator}`}
+              className={`form__input ${passValidate} `}
               type="password"
               id="password"
               autoComplete="off"
               placeholder="Password"
               ref={this.inputPasswordRef}
               onChange={this.hendleChange}
+              onFocus={this.handleField}
+              data-name={"password"}
             />
             <Error_message error_message={errors.includes("password")} />
-            <label className="form__label" htmlFor="password_conf">
+            <label
+              className={`form__label ${
+                activeField === "password_conf" ? "show" : ""
+              }`}
+              htmlFor="password_conf"
+            >
               Confirm password
             </label>
             <input
-              className={`form__input ${passValidator}`}
+              className={`form__input ${passValidate}`}
               type="password"
               id="password_conf"
               autoComplete="off"
               placeholder="Confirm your password"
               ref={this.inputPasswordConfirmRef}
               onChange={this.handlePasswordValidation}
+              onFocus={this.handleField}
+              data-name={"password_conf"}
             />
             <Error_message
               error_message={error_message}
@@ -292,6 +345,8 @@ class Form extends Component {
                 type="checkbox"
                 id="checkbox"
                 ref={this.inputCheckboxConfirmRef}
+                onFocus={this.handleField}
+                data-name={"checkbox"}
               />
               <span className="check__box" />
               Yes, I'd like to recieve the very occasional email with
@@ -341,47 +396,10 @@ class Form extends Component {
   }
 }
 
-const Error_message = ({ error_message, message }) => {
-  return (
-    <span
-      className={`form__error_message ${
-        error_message ? "form__error_message-shown" : ""
-      }`}
-    >
-      {message}
-    </span>
-  );
-};
-
-Error_message.propTypes = {
-  error_message: PropTypes.bool.isRequired,
-  message: PropTypes.string
-};
-
-Error_message.defaultProps = {
-  message: "Invalid value"
-};
-
-const Succsess_message = ({ succsess, hide, message }) => {
-  return (
-    <div className={`main__success-message ${succsess ? "show" : ""}`}>
-      <div className="message__tittle">
-        <span className="message__tittle-icon" />
-        Great!
-        <span onClick={hide} className="message__tittle-close-icon" />
-      </div>
-      <div className="message__message">{message}</div>
-    </div>
-  );
-};
-
-Succsess_message.propTypes = {
-  succsess: PropTypes.bool.isRequired,
-  hide: PropTypes.func
-};
-
-Succsess_message.defaultProps = {
-  message: "your account has been successfully created."
-};
-
-export default Form;
+export default connect(
+  state => ({
+    users: state.users,
+    countries: state.countries
+  }),
+  { addUser, getCountries }
+)(Form);
