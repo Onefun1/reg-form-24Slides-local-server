@@ -1,8 +1,5 @@
-$background_color: #fff;
-$border_color: #ebedf8;
-
 @mixin font-succsess {
-  color: #419779;
+  color: $succses_color;
   font-size: 14px;
 }
 
@@ -18,6 +15,7 @@ $border_color: #ebedf8;
   padding: 110px 298px;
   @include easeOut;
   box-shadow: 0 0 10px black;
+  background-image: url(../scripts/components/Form/img/background.jpg);
 
   &__success-message {
     position: absolute;
@@ -30,6 +28,7 @@ $border_color: #ebedf8;
     background-color: #e7f2ee;
     padding: 12px;
     visibility: hidden;
+    box-shadow: 0 0 10px black;
 
     & {
       .message__message,
@@ -75,8 +74,10 @@ $border_color: #ebedf8;
   width: 427px;
   height: 804px;
   border-radius: 4px;
-  border: solid 1px $border_color;
-  background-color: $background_color;
+  border: 1px solid $border_color;
+  background-color: $primary_color;
+  @include inputArrowsNumOff;
+  box-shadow: 0 0 10px black;
 
   &__title {
     width: 126px;
@@ -105,16 +106,60 @@ $border_color: #ebedf8;
   &__wrapper {
     width: inherit;
     display: flex;
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-items: center;
 
-    select {
+    .input_arrow {
+      background: $input-code-icon-down no-repeat right center;
+      background-size: auto;
+      cursor: pointer;
+
+      &-active {
+        background: $input-code-icon-up no-repeat right center;
+        background-size: auto;
+      }
+    }
+
+    :first-child {
       flex-shrink: 3;
-      align-self: flex-end;
-      font-size: 16px;
-      line-height: 1.5;
-      outline: none;
+    }
+
+    .drop-down-code__list,
+    .drop-down-country__list {
+      background-color: #fff;
+      width: 34%;
+      max-height: 575px;
+      position: absolute;
+      top: 335px;
+      overflow: scroll;
+      z-index: 2;
+      padding-left: 16px;
+      font-size: 18px;
+      overflow-x: hidden;
+      border-radius: 2px;
+      box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.3);
+      -webkit-appearance: none;
+      cursor: pointer;
+      @include scrollbar;
+
+      .list__item {
+        margin: 0;
+        padding: 10px 0;
+        border-bottom: 1px solid $border_color;
+
+        &:hover {
+          font-weight: 500;
+          color: $succses_color;
+          @include easeOut;
+        }
+      }
+
+      .item-code {
+        display: inline-block;
+        width: 60px;
+        margin-right: 15px;
+      }
+    }
+    .drop-down-country__list {
+      top: 485px;
     }
   }
 
@@ -128,18 +173,18 @@ $border_color: #ebedf8;
     visibility: hidden;
   }
 
-  &__input,
-  &__select {
+  &__input {
     width: inherit;
     font: inherit;
     margin-bottom: 30px;
     font-size: 16px;
     line-height: 1.5;
     outline: none;
-    // -webkit-appearance: none;
+    -webkit-appearance: none;
     border: none;
     border-bottom: solid 1px #9b9b9b;
     color: #454545;
+    -webkit-appearance: none;
 
     @include placeholder {
       font-size: 16px;
@@ -151,15 +196,15 @@ $border_color: #ebedf8;
     & {
       &:active,
       &:focus {
-        border-bottom: solid 1px #454545;
+        border-bottom: solid 1.5px #454545;
       }
 
       &-valid {
-        border-bottom: solid 1px #46b688;
+        border-bottom: solid 1.5px #46b688;
       }
 
       &-not-valid {
-        border-bottom: solid 1px #ed715c;
+        border-bottom: solid 1.5px #ed715c;
       }
 
       &:active::placeholder,

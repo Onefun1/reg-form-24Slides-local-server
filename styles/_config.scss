@@ -1,4 +1,6 @@
-$primary-color: #ccc;
+$primary-color: #fff;
+$border_color: #ebedf8;
+$succses_color: #46b688;
 
 // Form svg icons start //
 
@@ -9,6 +11,8 @@ $select-arrow-down: url(../scripts/components/Form/img/svg/arrow-down.svg);
 $succsess-icon: url(../scripts/components/Form/img/svg/succsess-icon.svg);
 $succsess-close-icon: url(../scripts/components/Form/img/svg/succsess-close-icon.svg);
 $form-sending-icon: url(../scripts/components/Form/img/svg/button-waiting-icon.svg);
+$input-code-icon-down: url(../scripts/components/Form/img/svg/arrow-down.svg);
+$input-code-icon-up: url(../scripts/components/Form/img/svg/arrow-up.svg);
 
 // Form svg icons End //
 
@@ -57,6 +61,14 @@ $form-sending-icon: url(../scripts/components/Form/img/svg/button-waiting-icon.s
   font-style: normal;
   font-stretch: normal;
   line-height: normal;
+}
+
+@mixin inputArrowsNumOff {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 }
 
 @mixin placeholder {
@@ -128,6 +140,29 @@ $form-sending-icon: url(../scripts/components/Form/img/svg/button-waiting-icon.s
 
 @mixin easeOut {
   transition: all 0.5s;
+}
+
+@mixin scrollbar {
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $primary_color;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+      (to top, $succses_color, darken($succses_color, 15%))
+    );
+    border-radius: 15px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(
+      (to bottom, $succses_color, darken($succses_color, 15%))
+    );
+    border-radius: 15px;
+  }
 }
 
 // Media Query Mixins

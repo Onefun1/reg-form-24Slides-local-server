@@ -8,6 +8,7 @@
 
 body {
   @include background;
+
   margin: 0;
   padding: 110px 0 110px 0;
 }
@@ -21,14 +22,14 @@ body::-webkit-scrollbar-track {
 }
 body::-webkit-scrollbar-thumb {
   background: linear-gradient(
-    (to top, rgb(81, 80, 80), darken(rgb(81, 80, 80), 55%))
+    (to top, $succses_color, darken($succses_color, 10%))
   );
   border-radius: 15px;
 }
 
 body::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(
-    (to bottom, rgb(81, 80, 80), darken(rgb(81, 80, 80), 55%))
+    (to bottom, $succses_color, darken($succses_color, 10%))
   );
   border-radius: 15px;
 }
