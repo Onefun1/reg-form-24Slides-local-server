@@ -62,7 +62,7 @@ class Form extends Component {
       passwordConfirmation: this.inputPasswordConfirmRef.current.value,
       confirm: this.inputCheckboxConfirmRef.current.checked
     };
-    if (this.inputCountriesRef.current.value) {
+    if (this.inputCountriesRef.current.value.includes("-")) {
       newUser.country = newUser.country.split("-")[1].trim("");
     }
 
