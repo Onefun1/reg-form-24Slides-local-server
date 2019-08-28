@@ -20,7 +20,8 @@ class Form extends Component {
       errors: [],
       length: 0,
       activeField: "",
-      inputValue: ""
+      inputCountryValue: "",
+      inputCodeValue: ""
     };
 
     this.inputCountriesRef = React.createRef();
@@ -186,10 +187,21 @@ class Form extends Component {
     }
   };
 
-  handleChangeInputValue = e => {
-    this.setState({
-      inputValue: e.target.value
-    });
+  handleChangeInputValue = (...props) => {
+    const [e, field] = props;
+    const { target: input } = e;
+
+    if (field === "country") {
+      this.setState({
+        inputCountryValue: input.value
+      });
+    }
+
+    if (field === "code") {
+      this.setState({
+        inputCodeValue: input.value
+      });
+    }
   };
 
   render() {
@@ -200,7 +212,9 @@ class Form extends Component {
       succsess,
       errors,
       length,
-      activeField
+      activeField,
+      inputCountryValue,
+      inputCodeValue
     } = this.state;
 
     const { countries } = this.props;
@@ -251,7 +265,7 @@ class Form extends Component {
                 type="number"
                 onClick={this.toggleClick}
                 autoComplete="off"
-                onChange={this.handleChangeInputValue}
+                onChange={e => this.handleChangeInputValue(e, "code")}
               />
               {activeField === "code" && (
                 <div
@@ -262,7 +276,7 @@ class Form extends Component {
                     ? countries.map(country => {
                         if (
                           String(country.dial_code).includes(
-                            String(this.state.inputValue)
+                            String(inputCodeValue)
                           )
                         ) {
                           return (
@@ -333,7 +347,7 @@ class Form extends Component {
                 onClick={this.toggleClick}
                 data-name={"country"}
                 autoComplete="off"
-                onChange={this.handleChangeInputValue}
+                onChange={e => this.handleChangeInputValue(e, "country")}
               />
               {activeField === "country" && (
                 <div className="drop-down-country__list">
@@ -342,10 +356,10 @@ class Form extends Component {
                         if (
                           country.name
                             .toLowerCase()
-                            .includes(this.state.inputValue.toLowerCase()) ||
+                            .includes(inputCountryValue.toLowerCase()) ||
                           country.country_code
                             .toLowerCase()
-                            .includes(this.state.inputValue.toLowerCase())
+                            .includes(inputCountryValue.toLowerCase())
                         ) {
                           return (
                             <p
