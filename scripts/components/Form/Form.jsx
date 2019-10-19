@@ -397,7 +397,6 @@ class Form extends Component {
               className={`form__input ${passValidate} `}
               type="password"
               id="password"
-              autoComplete="off"
               placeholder="Password"
               ref={this.inputPasswordRef}
               onChange={this.hendleChange}
