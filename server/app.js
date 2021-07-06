@@ -13,6 +13,7 @@ server.use(jsonServer.bodyParser);
 server.get("/countries", (req, res) => {
   res.json(countries);
 });
+
 server.post(
   "/register",
   [
@@ -22,7 +23,7 @@ server.post(
       .matches("^[a-z ,.'-]+$", "i"),
     check("dialCode").matches("^\\+?\\d{1,4}$"),
     check("email").isEmail(),
-    check("country").isIn(["UK", "US"]),
+    check("country").isIn(["GB", "US", "UA"]),
     check("password")
       .isLength({ min: 5, max: 128 })
       .withMessage("Password must be more than 5 characters and less than 128")

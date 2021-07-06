@@ -1,8 +1,25 @@
-$primary-color: #ccc;
+$primary-color: #fff;
+$border_color: #ebedf8;
+$succses_color: #46b688;
+
+// Form svg icons start //
+
 $checkbox-img: url(../scripts/components/Form/img/svg/checkbox.svg);
 $checkbox-img-checked: url(../scripts/components/Form/img/svg/checkbox-checked.svg);
 $select-arrow-up: url(../scripts/components/Form/img/svg/arrow-up.svg);
 $select-arrow-down: url(../scripts/components/Form/img/svg/arrow-down.svg);
+$succsess-icon: url(../scripts/components/Form/img/svg/succsess-icon.svg);
+$succsess-close-icon: url(../scripts/components/Form/img/svg/succsess-close-icon.svg);
+$form-sending-icon: url(../scripts/components/Form/img/svg/button-waiting-icon.svg);
+$input-code-icon-down: url(../scripts/components/Form/img/svg/arrow-down.svg);
+$input-code-icon-up: url(../scripts/components/Form/img/svg/arrow-up.svg);
+
+// Form svg icons End //
+
+@mixin font-succsess {
+  color: $succses_color;
+  font-size: 14px;
+}
 
 @mixin background {
   background-color: $primary-color;
@@ -24,12 +41,39 @@ $select-arrow-down: url(../scripts/components/Form/img/svg/arrow-down.svg);
   background-image: $select-arrow-up;
 }
 
+@mixin background-success-icon {
+  background-image: $succsess-icon;
+  background-repeat: no-repeat;
+  background-position: left;
+}
+
+@mixin background-success-close-icon {
+  background-image: $succsess-close-icon;
+  background-repeat: no-repeat;
+  background-position: right;
+  float: right;
+}
+
+@mixin form-sending-icon {
+  background-image: $form-sending-icon;
+  background-repeat: no-repeat;
+  background-position: right;
+}
+
 @mixin font {
   font-family: "Open Sans", "Helvetica Neue", sans-serif;
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
   line-height: normal;
+}
+
+@mixin inputArrowsNumOff {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 }
 
 @mixin placeholder {
@@ -47,31 +91,81 @@ $select-arrow-down: url(../scripts/components/Form/img/svg/arrow-down.svg);
   }
 }
 
+@mixin rotate360 {
+  -webkit-animation-name: spin;
+  -webkit-animation-duration: 2000ms;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+  -moz-animation-name: spin;
+  -moz-animation-duration: 2000ms;
+  -moz-animation-iteration-count: infinite;
+  -moz-animation-timing-function: linear;
+  -ms-animation-name: spin;
+  -ms-animation-duration: 2000ms;
+  -ms-animation-iteration-count: infinite;
+  -ms-animation-timing-function: linear;
+
+  animation-name: spin;
+  animation-duration: 2000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+@-ms-keyframes spin {
+  from {
+    -ms-transform: rotate(0deg);
+  }
+  to {
+    -ms-transform: rotate(360deg);
+  }
+}
+@-moz-keyframes spin {
+  from {
+    -moz-transform: rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @mixin easeOut {
-  transition: all 0.5s ease-out;
+  transition: all 0.5s;
 }
 
-// Media Query Mixins
-@mixin mediaSm {
-  @media screen and (max-width: 500px) {
-    @content;
+@mixin scrollbar {
+  &::-webkit-scrollbar {
+    width: 10px;
   }
-}
 
-@mixin mediaMd {
-  @media screen and (max-width: 768px) {
-    @content;
+  &::-webkit-scrollbar-track {
+    background: $primary_color;
   }
-}
-
-@mixin mediaLg {
-  @media screen and (min-width: 769px) and (max-width: 1170px) {
-    @content;
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+      (to top, $succses_color, darken($succses_color, 15%))
+    );
+    border-radius: 15px;
   }
-}
 
-@mixin mediaXl {
-  @media screen and (min-width: 1171px) {
-    @content;
+  &::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(
+      (to bottom, $succses_color, darken($succses_color, 15%))
+    );
+    border-radius: 15px;
   }
 }
